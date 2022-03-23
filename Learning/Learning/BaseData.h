@@ -25,7 +25,7 @@ const int COLOR_KEY_G = 175;
 const int COLOR_KEY_B = 180;
 
 const int RENDER_DRAW_COLOR = 0xFF;
-#define JUMP_VALUE 25
+#define JUMP_VALUE 15
 #define GRAVITY_SPEED 0.8
 #define MAX_FALL_SPEED 10
 #define BLANK_TILE 0 
@@ -36,7 +36,7 @@ const int RENDER_DRAW_COLOR = 0xFF;
 
 struct Input
 {
-	int left, right, up, down, jump;
+	int left, right, up, down, jump, idle;
 };
 
 struct Map

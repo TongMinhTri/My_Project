@@ -13,9 +13,10 @@ public:
 
 	enum WalkType
 	{
-		WALK_RIGHT = 0,
-		WALK_LEFT = 1,
-		JUMP = 2,
+		IDLE = 0,
+		WALK_RIGHT = 1,
+		WALK_LEFT = 2,
+		JUMP = 3,
 	};
 
 	bool LoadIMG(string path, SDL_Renderer* renderer);

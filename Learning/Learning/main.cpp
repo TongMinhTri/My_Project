@@ -85,7 +85,7 @@ int main(int argc, char* args[])
 	gm.loadTiles(renderer);
 
 	MainObject character;
-	character.LoadIMG("Character/Run_right.png", renderer);
+	character.LoadIMG("Character/Idle_right.png", renderer);
 	character.setClips();
 
 	bool quit = false;

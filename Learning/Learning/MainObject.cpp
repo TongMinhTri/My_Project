@@ -10,6 +10,7 @@ MainObject::MainObject()
 	input_type.left = input_type.right = 0;
 	input_type.up = input_type.down = 0;
 	input_type.jump = 0;
+	input_type.idle = 1;
 	on_ground = false;
 
 	for (int i = 0; i < 12; i++)
@@ -28,17 +29,17 @@ bool MainObject::LoadIMG(string path, SDL_Renderer* renderer)
 	bool res = BaseOject::loadImg(path, renderer);
 	if (res)
 	{
-		if (path == "Character/Run_left.png" || path == "Character/Run_right.png")
+		//if (path == "Character/Run_left.png" || path == "Character/Run_right.png")
 		{
 			frame_w = rect.w / 12;
 			frame_h = rect.h;
 		}
 		
-		else if (path == "Character/Jump_left.png" || path == "Character/Jump_right.png")
+		/*else if (path == "Character/Jump_left.png" || path == "Character/Jump_right.png")
 		{
 			frame_w = rect.w;
 			frame_h = rect.h;
-		}
+		}*/
 	}
 
 	return res;
@@ -46,20 +47,8 @@ bool MainObject::LoadIMG(string path, SDL_Renderer* renderer)
 
 void MainObject::show(SDL_Renderer* des)
 {
-	if (on_ground)
-	{
-		if (status == WALK_LEFT)
-		{
-			LoadIMG("Character/Run_left.png", des);
-		}
-		else if (status == WALK_RIGHT)
-		{
-			LoadIMG("Character/Run_right.png", des);
-		}
-	}
-
-
-	if (input_type.left == 1 || input_type.right == 1)
+	
+	if (input_type.left == 1 || input_type.right == 1 || input_type.idle == 1)
 	{
 		{
 			frame++;
@@ -97,6 +86,7 @@ void MainObject::handleEvents(SDL_Event event, SDL_Renderer* renderer)
 			input_type.right = 1;
 			input_type.left = 0;
 			input_type.jump = 0;
+			input_type.idle = 0;
 			if (on_ground)
 			{
 				LoadIMG("Character/Run_right.png", renderer);
@@ -113,6 +103,7 @@ void MainObject::handleEvents(SDL_Event event, SDL_Renderer* renderer)
 			input_type.left = 1;
 			input_type.right = 0;
 			input_type.jump = 0;
+			input_type.idle = 0;
 			if (on_ground)
 			{
 				LoadIMG("Character/Run_left.png", renderer);
@@ -125,14 +116,23 @@ void MainObject::handleEvents(SDL_Event event, SDL_Renderer* renderer)
 			break;
 		case SDLK_UP:
 		{
-			//status = JUMP;
+			status = JUMP;
 			//LoadIMG("Character/Jump_right.png", renderer);
 			input_type.jump = 1;
 			input_type.left = 0;
 			input_type.right = 0;
+			input_type.idle = 0;
 		}
 			break;
 		default:
+		{
+			status = IDLE;
+			//LoadIMG("Character/Idle_right.png", renderer);
+			input_type.jump = 0;
+			input_type.left = 0;
+			input_type.right = 0;
+			input_type.idle = 1;
+		}
 			break;
 		}
 	}
@@ -143,15 +143,20 @@ void MainObject::handleEvents(SDL_Event event, SDL_Renderer* renderer)
 		case SDLK_RIGHT:
 		{
 			input_type.right = 0;
+			input_type.idle = 1;
+			LoadIMG("Character/Idle_right.png", renderer);
 		}
 		break;
 		case SDLK_LEFT:
 		{
 			input_type.left = 0;
+			input_type.idle = 1;
+			LoadIMG("Character/Idle_left.png", renderer);
 		}
 		case SDLK_UP:
 		{
 			input_type.jump = 0;
+			input_type.idle = 1;
 		}
 		break;
 		default:
